@@ -1,18 +1,34 @@
+version: v2
+
 global:
   runner:
     os_image: ubuntu
-  tasks:
-    unit-tests:
-      steps: 
-      - checkout # clone the git repo - reports/html:
-        dir: coverage
-        index: index.html
-   compile:
-     steps:
-     # clone git repo
-     - checkout
-     - publish:
-          depends: [unit-tests, compile]
-   deloy:
-      depends: [publish]
-   
+
+tasks:
+  unit-tests:
+    steps: 
+      - checkout # Clone the git repo
+      - run: 
+          # Commands for running unit tests and generating coverage reports
+          # ...
+      - reports/html:
+          dir: coverage
+          index: index.html
+
+  compile:
+    steps:
+      - checkout # Clone git repo (if necessary)
+      - run:
+          # Commands for compilation and build processes
+          # ...
+      - publish:
+          depends: [unit-tests] # Ensure unit-tests task is completed before compilation
+          artifact_paths: ["/path/to/compiled/files"] # Specify the path to compiled files
+
+  deploy:
+    depends: [compile] # Deploy depends on successful compilation
+    steps:
+      - run:
+          # Commands for deploying the compiled application
+          # ...
+
