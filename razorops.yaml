@@ -1,0 +1,16 @@
+global:
+  runner:
+    os_image: ubuntu
+  tasks:
+    unit-tests:
+      steps: 
+      - checkout # clone the git repo
+   compile:
+     steps:
+     # clone git repo
+     - checkout
+     - publish:
+          depends: [unit-tests, compile]
+   deloy:
+      depends: [publish]
+   
