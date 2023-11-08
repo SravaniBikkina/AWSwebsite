@@ -4,7 +4,9 @@ global:
   tasks:
     unit-tests:
       steps: 
-      - checkout # clone the git repo
+      - checkout # clone the git repo - reports/html:
+        dir: coverage
+        index: index.html
    compile:
      steps:
      # clone git repo
