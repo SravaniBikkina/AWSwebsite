@@ -1,12 +1,7 @@
-version: v2
-
 tasks:
-  deploy:
+  restore-npm:
     steps:
-    - checkout
-
-    - run: aws s3 sync . s3://your-s3-bucket-name
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AKIASHCCGULGDR73AP6U }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.RrX7JirS5PDNFeI56gxmeBMA+2lQqaops2jlIOZD }}
-
+    ...
+    - reports/html:
+        dir: coverage
+        index: index.html
