@@ -1,5 +1,4 @@
 version: v2
-
 global:
   runner:
     os_image: ubuntu
@@ -10,7 +9,7 @@ tasks:
       - checkout # Clone the git repo
       - run: 
           # Commands for running unit tests and generating coverage reports
-          # ...
+
       - reports/html:
           dir: coverage
           index: index.html
@@ -19,8 +18,7 @@ tasks:
     steps:
       - checkout # Clone git repo (if necessary)
       - run:
-          # Commands for compilation and build processes
-          # ...
+          
       - publish:
           depends: [unit-tests] # Ensure unit-tests task is completed before compilation
           artifact_paths: ["/path/to/compiled/files"] # Specify the path to compiled files
