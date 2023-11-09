@@ -1,32 +1,16 @@
-version: v2
-global:
-  runner:
-    os_image: ubuntu
-
+version: 2
 tasks:
-  unit-tests:
-    steps: 
-      - checkout # Clone the git repo
-      - run: 
-          # Commands for running unit tests and generating coverage reports
-
-      - reports/html:
-          dir: coverage
-          index: index.html
-
-  compile:
+  build:
     steps:
-      - checkout # Clone git repo (if necessary)
-      - run:
-          
-      - publish:
-          depends: [unit-tests] # Ensure unit-tests task is completed before compilation
-          artifact_paths: ["/path/to/compiled/files"] # Specify the path to compiled files
+      - checkout
+      - commands:
+        - apt-get update && apt-get install -y awscli  # Install AWS CLI
+        - export AWS_ENV=production
+        - aws build  # Command to build AWS website
+        - aws s3 sync static-pages-folder s3://$AWS_S3_BUCKET  # Upload static pages to S3 bucket
+        if: branch == 'new'
 
-  deploy:
-    depends: [compile] # Deploy depends on successful compilation
-    steps:
-      - run:
-          # Commands for deploying the compiled application
-          # ...
-
+environments:
+  default:
+    - runner:
+        os_image: ubuntu
